@@ -1,0 +1,27 @@
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+
+<h1>Forecast</h1>
+
+<%= form_with(method: 'get', local: true) do %>
+    <%= label :address, "Provide your address?" %><br>
+    Street: <%= text_field_tag(:street_address) %><br>
+    City: <%= text_field_tag(:city) %><br>
+    State: <%= text_field_tag(:state) %><br>
+    Zip(Required): <%= text_field_tag(:zip) %><br>
+    <%= submit_tag("Submit") %>
+<% end %>
+
+<% if defined?(@forecast_data) && !@forecast_data[:error].present? %>
+    <ul>
+        <li>Temperature in Farenheit: <%= @forecast_data[:temp] %></li>
+        <li>Low Temperature in Farenheit: <%= @forecast_data[:temp_min] %></li>
+        <li>High Temperature in Farenheit: <%= @forecast_data[:temp_max] %></li>
+        <li>Humidity: <%= @forecast_data[:humidity] %>%</li>
+        <li>Description: <%= @forecast_data[:description] %></li>
+        <li>Is this cached result? <%= @forecast_data[:cached].present? %>
+    </ul>
+<% end %>
